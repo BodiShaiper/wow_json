@@ -1,0 +1,35 @@
+import json
+import csv
+
+with open("user.csv", "r") as user:
+    reader = csv.DictReader(user, delimiter=';')
+    user_dict = list(reader)
+
+with open("tags.csv", "r") as tags:
+    reader = csv.DictReader(tags, delimiter=';')
+    tags_dict = list(reader)
+
+with open("friends.csv", "r") as friends:
+    reader = csv.DictReader(friends, delimiter=';')
+    friends_dict = list(reader)
+
+# print(user_dict)
+
+for each_list in user_dict:
+    for elem in tags_dict:
+        if each_list["_id"] == elem["_id"]:
+            each_list["tags"] = elem["tags"]
+            break
+        else:
+            pass
+    for el in friends_dict:
+        if each_list["_id"] == el["_id"]:
+            each_list["friends"] = el["friends"]
+            break
+        else:
+            pass
+
+print(user_dict)
+
+with open("finally.json", "w") as good_job:
+    json.dump(user_dict, good_job)
